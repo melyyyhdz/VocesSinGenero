@@ -463,15 +463,6 @@ header{
 		align-items: center;
 	}
 
-	.container-options span {
-		text-align: center;
-		padding: 1rem 2rem;
-	}
-
-	.container-products {
-		grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
-	}
-
 	.gallery {
 		grid-template-rows: repeat(2, 15rem);
 	}
@@ -503,7 +494,7 @@ header{
 		font-size: 42.5%;
 	}
 
-	.content-banner {
+	.container-cover-info {
 		max-width: 50rem;
 		padding: 22rem 0;
 	}
@@ -597,3 +588,80 @@ header{
 		font-size: 1.6rem;
 	}
 }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+	header h1 {
+	  font-size: 2rem;
+	}
+	main {
+	  padding: 0 15px;
+	}
+
+
+  }
+  
+  @media (max-width: 768px) {
+	nav ul {
+	  flex-direction: column;
+	  gap: 10px;
+	}
+  
+	section {
+	  padding: 15px;
+	}
+  
+	header h1 {
+	  font-size: 1.8rem;
+	}
+
+	.gallery {
+		grid-template-rows: repeat(2, 15rem);
+	}
+
+	.container-features {
+		grid-template-columns: repeat(2, 1fr);
+		padding: 3rem 2rem;
+	}
+
+	.card-feature {
+		padding: 2rem;
+	}
+  }
+  
+  @media (max-width: 480px) {
+	body {
+	  font-size: 15px;
+	}
+  
+	header h1 {
+	  font-size: 1.6rem;
+	}
+  
+	section {
+	  padding: 10px;
+	}
+  
+	button {
+	  padding: 12px;
+	}
+
+	.gallery {
+		grid-template-rows: repeat(1, 5rem);
+	}
+
+	.feature-content {
+		align-items: center;
+	}
+
+	.feature-content p {
+		font-size: 1.4rem;
+		text-align: center;
+	}
+
+	.feature-content span {
+		font-size: 1.6rem;
+		text-align: center;
+	}
+
+  }
