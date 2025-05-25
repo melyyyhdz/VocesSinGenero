@@ -42,7 +42,7 @@ unset($_SESSION['error'], $_SESSION['correo_guardado'], $_SESSION['login_intenta
                 <div class="social-icons">
                     <a href="https://www.facebook.com/share/1PXSEEAPko/"><i class="fa-brands fa-facebook-f"></i></a>
                     <a href="https://www.instagram.com/vocessingenero"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-solid fa-x"></i></a>
+                    <a href="mailto:vocessingenero@gmail.com"><i class="fa-solid fa-x"></i></a>
                 </div>
             </form>
         </div>
