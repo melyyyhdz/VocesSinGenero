@@ -1,140 +1,112 @@
+<?php
+session_start();
+$error = $_SESSION['error'] ?? '';
+$correo_guardado = $_SESSION['correo_guardado'] ?? '';
+unset($_SESSION['error'], $_SESSION['correo_guardado'], $_SESSION['login_intentado']);
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login y Registro</title>
-    <link rel="stylesheet" href="LOGIN.css">
-    <?php
-    include(__DIR__ . '/conexion_bd.php');
-    include(__DIR__ . '/controlador_registrar_usuario.php');
-    ?>
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/13ad7a6a05.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css/login.css">
 </head>
+
 <body>
-    
-    <div class="main">
-        <div class="icon">
-            <img src="img/logo igualdad de genero.png" alt="Logo Igualdad de Género">
-        
-        <div class="navbar">
-            <div class="icon"></div>
-        </div>
-        <div class="content">
-            <h1>PALABRAS SIN MOLDES<br><span>VOCES SIN GÉNERO</span></h1>
-            <p class="par">La igualdad de género es un principio constitucional que estipula
-                <br> que hombres y mujeres son iguales ante la ley”, lo que significa
-                <br> que todas las personas sin distingo alguno tenemos los mismos
-                <br> derechos y deberes frente al Estado y la sociedad en su conjunto.
-                <br>
-                <br>Sabemos bien que no basta decretar la igualdad en la ley si en la realidad
-                <br> no es un hecho.  Para que así lo sea, la igualdad debe traducirse
-                <br> en oportunidades reales y efectivas para ir a la escuela,</p>
+    <div class="container">
+        <div class="form-box login">
+          <form action="procesar_login.php" method="POST">
+            <?php if (isset($_SESSION['error'])): ?>
+            <p style="color: red;"><?= $_SESSION['error'] ?></p>
+            <?php unset($_SESSION['error']); ?>
+            <?php endif; ?>
 
-                <div class="wrapper">
-                    <!-- Formulario Login -->
-                    <div class="form-wrapper sing-in">
-                        <form action="" method="POST">
-                            <h2>Login</h2>
-                            <div class="input-group">
-                                <input type="text" name="correo_login" required>
-                                <label>Usuario</label>
-                            </div>
-                            <div class="input-group">
-                                <input type="password" name="contrasena_login" id="password" required>
-                                <label>Contraseña</label>
-                            </div>
-                            <div class="show-remember">
-                                <button type="button" onclick="togglePassword('password')">Mostrar Contraseña</button>
-                            </div>
-                            <button type="submit">Login</button>
-                            <div class="singUp-link">
-                                <p>¿No tienes cuenta? <a href="#" class="singUpBtn-link">Registrarse</a></p>
-                            </div>
-                            <button onclick="window.history.back()" style="width: 25%; left: 40%;">Volver</button>
-                        </form>
-                    </div>
-            
-                    <!-- Formulario Registro -->
-                    <div class="form-wrapper sing-up">
-                        <form action="" method="POST" id="formularioRegistro">
-                            <h2></h2>
-                            <BR></BR>
-                            <?php if(isset($error)) { ?>
-                                <div class="error"><?php echo $error; ?></div>
-                            <?php } ?>
-                            
-                            <div class="input-group">
-                                <input type="text" name="nombre" required>
-                                <label>Nombre completo</label>
-                            </div>
-                            <div class="input-group">
-                                <input type="email" name="correo" required>
-                                <label>Correo electrónico</label>
-                            </div>
-                            <div class="input-group">
-                                <input type="password" name="contrasena" id="registroPassword" required minlength="8">
-                                <label>Contraseña</label>
-                            </div>
-                            <div class="input-group">
-                                <input type="password" name="confirmarcontrasena" id="confirmarPassword" required minlength="8">
-                                <label>Confirmar Contraseña</label>
-                            </div>
-
-                            <div class="show-password">
-                                <button type="button" onclick="togglePassword('registroPassword', 'confirmarPassword')">Mostrar Contraseñas</button>
-                            </div>
-                            <p>Al crear cuenta aceptas nuestros</p><a href="terminos_condiciones.html">Términos y condiciones</a>
-                            <button type="submit" name="registro">Registrarse</button>
-                            <div class="singUp-link">
-                                <p>¿Ya tienes cuenta? <a href="#" class="singInBtn-link">Iniciar Sesión</a></p>
-                            </div>
-                            <button onclick="window.history.back()" style="width: 25%; left: 40%;   ">Volver</button>
-
-                        </form>
-                    </div>
+                <h1>Login</h1>
+                <div class="input-box">
+                    <input type="email" name="correo" placeholder="Correo" required>
+                    <i class="fa-solid fa-user"></i>
                 </div>
+                <div class="input-box">
+                  <input type="password" id="loginPassword" name="contraseña" placeholder="Contraseña" required>
+                  <i class="fa-solid fa-eye" id="toggleLoginPassword" onclick="togglePasswordVisibility('loginPassword', 'toggleLoginPassword')"></i>
+                </div>
+
+                <div class="forgot-link">
+                    <a href="#">Olvidaste tu contraseña?</a>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <p>Siguenos en nuestras redes sociales</p>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/share/1PXSEEAPko/"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/vocessingenero"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="mailto:vocessingenero@gmail.com"><i class="fa-solid fa-x"></i></a>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-box register">
+            <form action="registro.php" method="POST" enctype="multipart/form-data">
+                <h1>Registrate</h1>
+                <div class="input-box1">
+                  <label for="foto_perfil" style="display: block; text-align: left; font-weight: 500;"></label>
+                  <input type="file" name="foto_perfil" id="foto_perfil" accept="image/*" required>
+                  <i class="fa-solid fa-camera"></i>
+                </div>
+                <div class="input-box1">
+                    <input type="text" name="nombre_usuario" placeholder="Usuario" required>
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="input-box1">
+                    <input type="email" name="correo" placeholder="Correo" required>
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+                <!-- Contraseña -->
+                <div class="input-box1 contraseña-box">
+                  <input type="password" id="registroPassword" name="contraseña" placeholder="Contraseña" required>
+                  <i class="fa-solid fa-eye" id="toggleRegistroPassword" onclick="togglePasswordVisibility('registroPassword', 'toggleRegistroPassword')"></i>
+                </div>
+
+                <div class="input-box1 contraseña-box">
+                  <input type="password" id="confirmarPassword" name="confirmar_contraseña" placeholder="Confirmar contraseña" required>
+                  <i class="fa-solid fa-eye" id="toggleConfirmarPassword" onclick="togglePasswordVisibility('confirmarPassword', 'toggleConfirmarPassword')"></i>
+                </div>
+
+
+                <!-- Mensaje si no coinciden -->
+                <small id="passwordMismatch" style="color: red; display: none;">Las contraseñas no coinciden.</small>
+
+
+                        
+                        <ul id="password-rules" style="list-style: none; padding-left: 0;">
+                            <li id="rule-length" class="invalid">✔ Mínimo de 8 caracteres</li>
+                            <li id="rule-uppercase" class="invalid">✔ Mayúsculas y minúsculas</li>
+                            <li id="rule-number" class="invalid">✔ Un número</li>
+                            <li id="rule-special" class="invalid">✔ Un carácter especial</li>
+                        </ul>
+                <p class="terminos_condiciones">Al crear cuenta aceptas nuestros <a href="terminos_condiciones.html">Términos y condiciones</a></p>
+
+                <button type="submit" class="btn">Registrate</button>
+            </form>
+        </div>
+
+        <div class="toggle-box">
+            <div class="toggle-panel toggle-left">
+                <h1>Hola, Bienvenido a Voces sin Genero!</h1>
+                <p>No tienes cuenta?</p>
+                <button class="btn register-btn">Registrate</button>
+            </div>
+            <div class="toggle-panel toggle-right">
+                <h1>Bienvenido de nuevo!</h1>
+                <p>Ya tienes cuenta?</p>
+                <button class="btn login-btn">Login</button>
             </div>
         </div>
+
     </div>
-
-    <script src="LOGIN.js"></script>
-    <script>
-        // Función para manejar el evento "Enter"
-        function manejarEnter(event, siguienteInputId) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                if (siguienteInputId) {
-                    document.getElementById(siguienteInputId).focus();
-                } else {
-                    document.getElementById("formularioRegistro").submit();
-                }
-            }
-        }
-
-        // Asignar eventos a los inputs del formulario de registro
-        document.querySelector('[name="nombre"]').addEventListener("keydown", function (event) {
-            manejarEnter(event, "registroPassword");
-        });
-
-        document.querySelector('[name="correo"]').addEventListener("keydown", function (event) {
-            manejarEnter(event, "registroPassword");
-        });
-
-        document.getElementById("registroPassword").addEventListener("keydown", function (event) {
-            manejarEnter(event, "confirmarPassword");
-        });
-
-        document.getElementById("confirmarPassword").addEventListener("keydown", function (event) {
-            manejarEnter(event, null);
-        });
-
-        // Función para mostrar/ocultar contraseñas
-        function togglePassword(...ids) {
-            ids.forEach(id => {
-                const passwordField = document.getElementById(id);
-                passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
-            });
-        }
-    </script>
+    
+    <script src="js/login.js"></script>
 </body>
 </html>

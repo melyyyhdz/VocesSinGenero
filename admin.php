@@ -1,81 +1,79 @@
 <?php
 session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
-// SI EL USUARIO NO ESTA LOGEADO REDIRIGIR A:
-if (!isset($_SESSION['admin'])) {
-    header("Location: LOGIN.PHP");
+if (!isset($_SESSION['usuario_id']) || $_SESSION['rol'] !== 'admin') {
+    echo "<script>alert('Acceso denegado.'); window.location.href='index.php';</script>";
     exit;
 }
 
-// Manejar mensajes
-$mensaje = '';
-if (isset($_GET['success']) && $_GET['success'] == 'true') {
-    $mensaje = '<div class="success-message">Publicación creada exitosamente!</div>';
-}
-if (isset($_SESSION['error'])) {
-    $mensaje = '<div class="error-message">' . $_SESSION['error'] . '</div>';
-    unset($_SESSION['error']);
-}
+require_once 'conexion.php';
+$conn = conectarDB();
+$result = $conn->query("SELECT id, titulo, fecha FROM posts ORDER BY fecha DESC");
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
-    <script src="js/editor_texto_publicar_notas.js"></script>
-    <title>Voces sin Género - Panel Admin</title>
-    <link rel="stylesheet" href="css/admin.css">
+  <meta charset="UTF-8">
+  <title>Panel de Administración</title>
+  <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
-    <div class="admin-container">
-        <aside class="sidebar">
-            <h1>Voces sin Género</h1>
-            <nav>
-                <button class="nav-btn active" data-section="crear-post">Crear Publicación</button>
-                <button class="nav-btn" data-section="usuarios">Administradores</button>
-                <button class="nav-btn" data-section="estadisticas">Estadísticas</button>
-            </nav>
-            <div class="user-info">
-                <p>Bienvenid@, <?php echo htmlspecialchars($_SESSION['admin']['nombre']); ?></p>
-                <a href="logout.php" class="logout-btn">Cerrar Sesión</a>
-            </div>
-        </aside>
+  <div class="admin-container">
+    <aside class="sidebar">
+      <h2>Voces sin Género</h2>
+      <nav>
+        <ul>
+          <li><a href="crear_post.php">Crear Publicación</a></li>
+          <li><a href="#gestion" onclick="mostrarSeccion('gestion')">Gestionar Publicaciones</a></li>
+        </ul>
+      </nav>
+      <div class="logout">
+        <p>Bienvenid@, [Admin]</p>
+        <form action="logout.php" method="POST">
+          <button type="submit">Cerrar Sesión</button>
+        </form>
+      </div>
+    </aside>
 
-        <main class="main-content">
-            <?php echo $mensaje; ?>
-            
-            <section id="crear-post" class="content-section active">
-                <h2>Crear Nueva Publicación</h2>
-                <form class="post-form" enctype="multipart/form-data" method="POST" action="publicacionesconexion.php">
-                    <div class="form-group">
-                        <label for="titulo">Título:</label>
-                        <input type="text" id="titulo" name="titulo" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="contenido">Contenido:</label>
-                        <textarea id="contenido" name="contenido" rows="5" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="imagen_cabecera">Imagen de cabecera:</label>
-                        <input type="file" id="imagen_cabecera" name="imagen_cabecera" accept="image/*"><br><br>
-                        
-                        <label for="imagen_cuerpo1">Primera imagen de cuerpo:</label>
-                        <input type="file" id="imagen_cuerpo1" name="imagen_cuerpo1" accept="image/*"><br><br>
+    <main class="main-panel">
+      <section id="gestion">
+        <h2>Gestor de Publicaciones</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php while ($row = $result->fetch_assoc()): ?>
+              <tr>
+                <td><?= htmlspecialchars($row['titulo']) ?></td>
+                <td><?= date("d M Y - H:i", strtotime($row['fecha'])) ?></td>
+                <td>
+                  <a href="editar_post.php?id=<?= $row['id'] ?>" class="btn-edit">Editar</a>
+                  <a href="eliminar_post.php?id=<?= $row['id'] ?>" class="btn-delete" onclick="return confirm('¿Estás segur@ que deseas eliminar este artículo?')">Eliminar</a>
+                </td>
+              </tr>
+            <?php endwhile; ?>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
 
-                        <label for="imagen_cuerpo2">Segunda imagen de cuerpo:</label>
-                        <input type="file" id="imagen_cuerpo2" name="imagen_cuerpo2" accept="image/*">
-                    </div>
-                    <button type="submit" class="submit-btn">Publicar</button>
-                </form>
-            </section>
-
-            <!-- Resto del contenido... -->
-        </main>
-    </div>
-
-    <script src="admin.js"></script>
+  <script>
+    function mostrarSeccion(id) {
+      document.querySelectorAll('main section').forEach(sec => sec.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+    }
+    mostrarSeccion('gestion');
+  </script>
 </body>
 </html>
+
+<?php
+$conn->close();
+?>
