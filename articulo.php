@@ -263,7 +263,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <script>
 const textarea = document.querySelector("textarea[name='contenido']");
 textarea.addEventListener("input", () => {
-  if (textarea.value.length < 5) {
+  if (textarea.value.length < 2) {
     textarea.setCustomValidity("El comentario debe tener al menos 5 caracteres.");
   } else {
     textarea.setCustomValidity("");
