@@ -47,6 +47,7 @@ unset($_SESSION['error'], $_SESSION['correo_guardado'], $_SESSION['login_intenta
             </form>
         </div>
 
+        
         <div class="form-box register">
             <form action="registro.php" method="POST" enctype="multipart/form-data">
                 <h1>Registrate</h1>
