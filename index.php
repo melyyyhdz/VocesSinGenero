@@ -173,52 +173,6 @@ if (!isset($_SESSION['usuario_id']) && isset($_COOKIE['user_data'])) {
 		</div>
 	</section>
 
-	<!-- TESTIMONIALS -->
-	<section class="section-testimonials">
-		<div class="container">
-			<div class="content">
-				<span class="badge"> Testimonios </span>
-				<h2 class="title">Historias reales que reflejan lucha, resiliencia y <span>transformación social</span></h2>
-
-				<div class="carousel-wrapper">
-					<div class="container-testimonials">
-						<!-- Testimonio 1 -->
-						<div class="testimonial">
-							<img src="images/home/quote.svg" alt="Icon Quote" class="quote-icon" />
-							<p>Poder compartir mi opinión en este espacio fue liberador. Por primera vez sentí que mi voz tenía un lugar, sin juicios ni etiquetas.</p>
-							<figure><img src="images/home/customer-1.jpg" alt="Testimonial 1" /></figure>
-							<h3>Carlos Pérez</h3>
-						</div>
-
-						<!-- Testimonio 2 -->
-						<div class="testimonial">
-							<img src="images/home/quote.svg" alt="Icon Quote" class="quote-icon" />
-							<p>Encontré artículos que me ayudaron a comprender mejor mi identidad. Este blog es una herramienta poderosa para el cambio social.</p>
-							<figure><img src="images/home/customer-2.jpg" alt="Testimonial 2" /></figure>
-							<h3>José Carlos</h3>
-						</div>
-
-						<!-- Testimonio 3 -->
-						<div class="testimonial">
-							<img src="images/home/quote.svg" alt="Icon Quote" class="quote-icon" />
-							<p>Este espacio me inspiró a empezar una red de apoyo en mi comunidad. Leer experiencias diversas me ayudó a entender que no estamos solxs.</p>
-							<figure><img src="images/home/customer-3.jpg" alt="Testimonial 3" /></figure>
-							<h3>Andrea Rodríguez</h3>
-						</div>
-					</div>
-
-					<!-- BOTONES CARRUSEL -->
-					<button type="button" class="btn-carousel btn-prev">
-						<i class="fa-solid fa-chevron-left"></i>
-					</button>
-					<button type="button" class="btn-carousel btn-next">
-						<i class="fa-solid fa-chevron-right"></i>
-					</button>
-				</div>
-			</div>
-		</div>
-	</section>
-
 	<!-- FOOTER -->
 	<footer class="background-dark-1">
 		<div class="container">
