@@ -1698,7 +1698,7 @@ input[type="radio"]{
   
 
 /* ********************************** */
-/*            NOOSTROS                 */
+/*            NOSOTROS                 */
 /* ********************************** */
 .team-container{
 	background-image: url(../images/Voces/mujeres.jpeg);
@@ -1864,3 +1864,29 @@ input[type="radio"]{
 	background-color: #1d6143;
   }
   
+@media screen and (max-width: 768px) {
+	.team-container h1 {
+		font-size: 32px;
+	}
+
+	.team-container h2 {
+		font-size: 16px;
+		line-height: 1.4;
+		text-align: justify;
+	}
+
+	.team-container .team {
+		grid-template-columns: 1fr; /* Una sola columna en móviles */
+		padding: 0 20px;
+	}
+
+	.team-container .member {
+		width: 100%;
+		height: auto;
+	}
+
+	.team-container .member img {
+		width: 100px;
+		height: 100px;
+	}
+}
